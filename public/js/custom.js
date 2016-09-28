@@ -4,8 +4,9 @@ $(function(){
             $(this).removeClass('selected');
             $(this).parent().find('dd').slideUp('fast');
         }else{
-            $(this).addClass('selected');
+            $('.left-menu-aside dt').removeClass('selected');
             $('.left-menu-aside dd').slideUp('fast');
+            $(this).addClass('selected');
             $(this).parent().find('dd').slideDown('fast');
         }
     });
