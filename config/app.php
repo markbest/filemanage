@@ -166,6 +166,7 @@ return [
         /*
          * Package Service Providers...
          */
+        App\Providers\PaymentServiceProvider::class,
 
         //
 
@@ -225,6 +226,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Payment' => App\Facades\PaymentGateway\PayFacade::class,
 
     ],
 
