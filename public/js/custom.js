@@ -10,6 +10,25 @@ $(function(){
             $(this).parent().find('dd').slideDown('fast');
         }
     });
+    $('.del-data').each(function(){
+        $(this).click(function(){
+            if(confirm("确定要删除数据吗")){
+                $(this).parent().submit();
+            }
+        });
+    });
+    $("a[rel=group]").fancybox({
+        'transitionIn'	: 'elastic',
+        'transitionOut'	: 'elastic',
+        'titlePosition' : 'inside'
+    });
+    $('.album-img-list img').click(function(){
+        if($(this).hasClass('selected')){
+            $(this).removeClass('selected');
+        }else{
+            $(this).addClass('selected');
+        }
+    });
 });
 
 function displaynavbar(obj){

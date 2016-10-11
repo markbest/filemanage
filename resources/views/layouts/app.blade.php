@@ -19,21 +19,12 @@
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name') }}
                 </a>
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <ul class="nav navbar-nav">
-                    &nbsp;
-                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">Login</a></li>
@@ -63,19 +54,20 @@
     </nav>
     <aside class="left-menu-aside">
         <div class="menu_dropdown">
+            <dl id="menu-picture">
+                <dt><i class="fa fa-picture-o menu_dropdown-text" aria-hidden="true"></i> 图片管理<i class="fa fa-caret-down menu_dropdown-arrow" aria-hidden="true"></i></dt>
+                <dd>
+                    <ul>
+                        <li><a href="{{ url('/albums') }}">相册管理</a></li>
+                        <li><a href="{{ url('/pictures') }}">图片管理</a></li>
+                    </ul>
+                </dd>
+            </dl>
             <dl id="menu-article">
                 <dt><i class="fa fa-briefcase menu_dropdown-text" aria-hidden="true"></i> 资讯管理<i class="fa fa-caret-down menu_dropdown-arrow" aria-hidden="true"></i></dt>
                 <dd>
                     <ul>
                         <li><a _href="article-list.html" data-title="资讯管理" href="javascript:void(0)">资讯管理</a></li>
-                    </ul>
-                </dd>
-            </dl>
-            <dl id="menu-picture">
-                <dt><i class="fa fa-picture-o menu_dropdown-text" aria-hidden="true"></i> 图片管理<i class="fa fa-caret-down menu_dropdown-arrow" aria-hidden="true"></i></dt>
-                <dd>
-                    <ul>
-                        <li><a _href="picture-list.html" data-title="图片管理" href="javascript:void(0)">图片管理</a></li>
                     </ul>
                 </dd>
             </dl>
@@ -154,8 +146,70 @@
     <div class="right-content-box">
         @yield('content')
     </div>
+
+    <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}" />
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/dmuploader-preview.js') }}"></script>
+    <script src="{{ asset('js/dmuploader.js') }}"></script>
+    <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
+    <script>
+        $(function(){
+            $('#drag-and-drop-zone').dmUploader({
+                url: '{{ URL("pictures/upload")}}',
+                dataType: 'json',
+                extraData:{'_token': $('input[name="_token"]').val()},
+                allowedTypes: 'image/*',
+                onInit: function(){
+                    $.daniuploader.addLog('#debug-container', 'default', 'Plugin initialized correctly');
+                },
+                onBeforeUpload: function(id){
+                    $.daniuploader.addLog('#debug-container', 'default', 'Starting the upload of #' + id);
+                    $.daniuploader.updateFileStatus(id, 'default', 'Uploading...');
+                },
+                onNewFile: function(id, file){
+                    $.daniuploader.addFile('#files-container', id, file);
+                    if(typeof FileReader !== "undefined"){
+                        var reader = new FileReader();
+                        var img = $('#files-container').find('.uploader-image-preview').eq(0);
+                        reader.onload = function (e){
+                            img.attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(file);
+                    }else{
+                        $('#uploader-files').find('.uploader-image-preview').remove();
+                    }
+                },
+                onComplete: function(){
+                    $.daniuploader.addLog('#debug-container', 'default', 'All pending tranfers completed');
+                    location.reload();
+                },
+                onUploadProgress: function(id, percent){
+                    var percentStr = percent + '%';
+                    $.daniuploader.updateFileProgress(id, percentStr);
+                },
+                onUploadSuccess: function(id, data){
+                    $.daniuploader.addLog('#debug-container', 'success', 'Upload of file #' + id + ' completed');
+                    $.daniuploader.addLog('#debug-container', 'info', 'Server Response for file #' + id + ': ' + JSON.stringify(data));
+                    $.daniuploader.updateFileStatus(id, 'success', 'Upload Complete');
+                    $.daniuploader.updateFileProgress(id, '100%');
+                },
+                onUploadError: function(id, message){
+                    $.daniuploader.updateFileStatus(id, 'error', message);
+                    $.daniuploader.addLog('#debug-container', 'error', 'Failed to Upload file #' + id + ': ' + message);
+                },
+                onFileTypeError: function(file){
+                    $.daniuploader.addLog('#debug-container', 'error', 'File \'' + file.name + '\' cannot be added: must be an image');
+                },
+                onFileSizeError: function(file){
+                    $.daniuploader.addLog('#debug-container', 'error', 'File \'' + file.name + '\' cannot be added: size excess limit');
+                },
+                onFallbackMode: function(message){
+                    $.daniuploader.addLog('#debug-container', 'info', 'Browser not supported(do something else here!): ' + message);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
