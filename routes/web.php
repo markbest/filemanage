@@ -17,4 +17,5 @@ Route::group(['middleware' => ['auth']], function()
     Route::resource('albums', 'AlbumsController');
     Route::resource('pictures', 'PicturesController');
     Route::post('pictures/upload', 'PicturesController@upload');
+    Route::post('pictures/move', 'PicturesController@move');
 });

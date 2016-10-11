@@ -6,13 +6,27 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Picture;
+use App\Album;
 use Redirect;
+use Illuminate\Support\Facades\DB;
 
 class PicturesController extends Controller
 {
     public function index(){
-        $pictures = Picture::all();
-        return view('picture')->with('pictures',$pictures);
+        $albums = Album::all();
+        $collection = DB::table('albums_pictures')
+                    ->leftjoin('albums', 'albums_pictures.album_id', '=', 'albums.id')
+                    ->select('albums_pictures.*', 'albums.name as album_name')
+                    ->orderBy('albums_pictures.id','desc')
+                    ->get()
+                    ->toArray();
+        $pictures = array();
+        foreach($collection as $data){
+            $pictures[$data->album_id]['src'][$data->id] = $data->src;
+            $pictures[$data->album_id]['name'] = $data->album_name ? $data->album_name : '尚未排入相册的图片';
+        }
+        krsort($pictures);
+        return view('picture',['pictures'=>$pictures,'albums'=>$albums]);
     }
 
     public function upload(Request $request){
@@ -45,5 +59,19 @@ class PicturesController extends Controller
         $result['message'] = $message;
         $result['status'] = $status;
         return json_encode($result);
+    }
+
+    public function move(Request $request){
+        $album = $request->input('album');
+        $pictures = $request->input('pic');
+
+        if($album && is_array($pictures) && count($pictures)){
+            foreach($pictures as $picture){
+                $object = Picture::find($picture);
+                $object->album_id = $album;
+                $object->save();
+            }
+        }
+        return Redirect::to('pictures');
     }
 }

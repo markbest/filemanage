@@ -14,7 +14,7 @@ i.fa{margin-right:5px;}
 .panel-admin .panel-heading{height:40px;line-height:40px;padding:0px;margin-top:6px;}
 .form-horizontal .control-label{width:135px;float:left;}
 .form-horizontal .control-content{float:left;margin-right:10px;}
-.modal-content .form-horizontal input{width:400px;}
+.modal-content .form-horizontal input,.modal-content .form-horizontal select{width:400px;}
 .form-horizontal textarea{width:400px;height:150px;}
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th
 {padding:5px;height:25px;line-height:25px;vertical-align:middle}
@@ -195,7 +195,25 @@ i.fa{margin-right:5px;}
 }
 
 /* album image list */
+.album-list-container{margin-bottom:5px;padding:0px;}
+.album-list-container h3{
+    font-size:14px;
+    padding-left:10px;
+    font-weight:bold;
+    height: 35px;
+    line-height: 35px;
+    background: #f2f6fd;
+    margin: 0 5px 5px 0;
+    cursor: pointer;
+    display: block;
+}
+.album-list-container h3 em{margin-left:5px;color:#a4acc2;font-weight:normal;font-family:normal;font-style:normal;}
+.album-list-container h3 i{margin-left:10px;}
+.album-list-container .open .album-img-list{display:block;}
+.album-list-container .closed .album-img-list{display:none;}
+.album-list-container i{transition-duration:0.3s;transition-property:all;}
+.album-list-container .closed i{transform:rotate(-180deg);}
+.album-list-container .col-sm-12{padding:0px;}
 .album-img-list{float:left;margin:0px 10px 5px 0px;position:relative;}
 .album-img-list img{height:110px;display:inline-block;padding:5px;border:2px solid #ffffff;}
-.album-img-list img.selected{border:2px solid #ddd;}
-.enlarge-detail{position:absolute;}
+.album-img-list img:hover{border:2px solid #ddd;}

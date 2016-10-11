@@ -29,6 +29,13 @@ $(function(){
             $(this).addClass('selected');
         }
     });
+    $('.album-list-container h3').click(function(){
+        if($(this).parent().hasClass('open')){
+            $(this).parent().removeClass('open').addClass('closed');
+        }else{
+            $(this).parent().removeClass('closed').addClass('open');
+        }
+    });
 });
 
 function displaynavbar(obj){
