@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Album;
+use App\Picture;
 use Redirect;
 
 class AlbumsController extends Controller
@@ -35,6 +36,7 @@ class AlbumsController extends Controller
     public function destroy($id)
     {
         Album::find($id)->delete();
+        Picture::where('album_id',$id)->update(['album_id'=>0]);
         return Redirect::to('albums');
     }
 }

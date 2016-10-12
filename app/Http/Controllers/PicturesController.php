@@ -74,4 +74,15 @@ class PicturesController extends Controller
         }
         return Redirect::to('pictures');
     }
+
+    public function delete(Request $request){
+        $ids = $request->input('del-pic-ids');
+        $ids_array = explode(',',$ids);
+        foreach($ids_array as $id){
+            $picture = Picture::find($id);
+            unlink($picture->src);
+            $picture->delete();
+        }
+        return Redirect::to('pictures');
+    }
 }

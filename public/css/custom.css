@@ -103,7 +103,7 @@ i.fa{margin-right:5px;}
 .left-menu-aside .menu_dropdown li a i{font-weight:normal}
 .left-menu-aside .menu_dropdown dd ul{padding:3px 8px}
 .left-menu-aside .menu_dropdown dd li{line-height:32px}
-.left-menu-aside .menu_dropdown dd li:hover{background-color:#ffffff;}
+.left-menu-aside .menu_dropdown dd li:hover,.left-menu-aside .menu_dropdown dd li.current{background-color:#ffffff;}
 .left-menu-aside .menu_dropdown dd li a{line-height:32px;padding-left:30px;border-bottom:none;font-weight:normal;color:#636b6f;}
 .left-menu-aside .menu_dropdown li a:hover{text-decoration:none}
 .left-menu-aside .menu_dropdown li.current a,.menu_dropdown li.current a:hover{background-color:rgba(255,255,255,0.2)}
@@ -198,7 +198,7 @@ i.fa{margin-right:5px;}
 .album-list-container{margin-bottom:5px;padding:0px;}
 .album-list-container h3{
     font-size:14px;
-    padding-left:10px;
+    padding:0px 20px;
     font-weight:bold;
     height: 35px;
     line-height: 35px;
@@ -214,6 +214,10 @@ i.fa{margin-right:5px;}
 .album-list-container i{transition-duration:0.3s;transition-property:all;}
 .album-list-container .closed i{transform:rotate(-180deg);}
 .album-list-container .col-sm-12{padding:0px;}
+.album-list-container .left{width:50%;float:left;}
+.album-list-container .right{width:50%;float:right;text-align:right;}
 .album-img-list{float:left;margin:0px 10px 5px 0px;position:relative;}
-.album-img-list img{height:110px;display:inline-block;padding:5px;border:2px solid #ffffff;}
-.album-img-list img:hover{border:2px solid #ddd;}
+.album-img-list img{height:110px;display:inline-block;padding:5px;border:2px solid #ffffff;margin-bottom:5px;}
+.album-img-list img.selected{border:2px solid #ddd;}
+.album-img-list a,.album-img-list a:hover{text-decoration:none;}
+.btn-move-album,.btn-delete-pic,.btn-download-pic{display:none;}

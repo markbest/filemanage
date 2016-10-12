@@ -8,19 +8,32 @@
                     <div class="panel-heading">
                         <div class="col-sm-4"><i class="fa fa-home"></i><b>图片管理</b> > 图片管理</div>
                         <div class="col-sm-8 align-right">
-                            <button type="button" class="admin-btn btn btn-primary" data-toggle="modal" data-target="#move_item"><i class="fa fa-hand-rock-o"></i>添加到相册</button>
-                            <button type="button" class="admin-btn btn btn-primary" data-toggle="modal" data-target="#add_item"><i class="fa fa-plus-circle"></i>添加图片</button>
+                            <button type="button" class="btn-delete-pic admin-btn btn btn-danger"><i class="fa fa-trash"></i>删除</button>
+                            <button type="button" class="btn-download-pic admin-btn btn btn-primary"><i class="fa fa-download"></i>下载</button>
+                            <button type="button" class="btn-move-album admin-btn btn btn-primary" data-toggle="modal" data-target="#move_item"><i class="fa fa-hand-rock-o"></i>移动到相册</button>
+                            <button type="button" class="admin-btn btn btn-primary" data-toggle="modal" data-target="#add_item"><i class="fa fa-plus-circle"></i>上传图片</button>
                         </div>
                     </div>
                     <div class="panel-body">
-                        @foreach($pictures as $picture)
+                        @foreach($pictures as $key=>$picture)
                             <div class="album-list-container">
                                 <div class="col-sm-12 open">
-                                    <h3>{{ $picture['name'] }}<i class="fa fa-chevron-down"></i><em>{{ count($picture['src']) }}张</em></h3>
+                                    <h3>
+                                        <div class="left">
+                                            {{ $picture['name'] }}
+                                            <i class="fa fa-chevron-down"></i>
+                                            <em>{{ count($picture['src']) }}张</em>
+                                        </div>
+                                        <div class="right">
+                                            <input type="checkbox" class="all_checked" id="all_checked_{{ $key }}" value="">&nbsp;<label for="all_checked_{{ $key }}">全选</label>
+                                        </div>
+                                    </h3>
                                     <div class="album-img-list">
                                         @foreach($picture['src'] as $id => $pic)
-                                        <a rel="group" href="{{ asset($pic) }}"><img src="{{ asset($pic) }}"></a>
-                                        <input type="checkbox" name="pic[]" value="{{ $id }}" form="move-albums" />
+                                        <a href="javascript:void(0);" data-link="{{ asset($pic) }}">
+                                            <img src="{{ asset($pic) }}">
+                                            <input style="display:none;" type="checkbox" name="pic[]" value="{{ $id }}" form="move-albums" />
+                                        </a>
                                         @endforeach
                                     </div>
                                 </div>
@@ -59,10 +72,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="admin-btn btn btn-default" data-dismiss="modal">取消</button>
-                                    <button type="submit" class="admin-btn btn btn-primary"><i class="fa fa-floppy-o"></i>保存</button>
-                                </div>
+                                <div class="modal-footer"></div>
                             </div>
                         </div>
                     </div>
@@ -96,8 +106,73 @@
                             </div>
                         </div>
                     </div>
+                    <form id="del-pictures" action="{{ url('pictures/delete')}}" method="POST">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input name="del-pic-ids" type="hidden" value="">
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+    <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}" />
+    <script src="{{ asset('js/dmuploader-preview.js') }}"></script>
+    <script src="{{ asset('js/dmuploader.js') }}"></script>
+    <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
+    <script>
+        $(function(){
+            $('#drag-and-drop-zone').dmUploader({
+                url: '{{ URL("pictures/upload")}}',
+                dataType: 'json',
+                extraData:{'_token': $('input[name="_token"]').val()},
+                allowedTypes: 'image/*',
+                onInit: function(){
+                    $.daniuploader.addLog('#debug-container', 'default', 'Plugin initialized correctly');
+                },
+                onBeforeUpload: function(id){
+                    $.daniuploader.addLog('#debug-container', 'default', 'Starting the upload of #' + id);
+                    $.daniuploader.updateFileStatus(id, 'default', 'Uploading...');
+                },
+                onNewFile: function(id, file){
+                    $.daniuploader.addFile('#files-container', id, file);
+                    if(typeof FileReader !== "undefined"){
+                        var reader = new FileReader();
+                        var img = $('#files-container').find('.uploader-image-preview').eq(0);
+                        reader.onload = function (e){
+                            img.attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(file);
+                    }else{
+                        $('#uploader-files').find('.uploader-image-preview').remove();
+                    }
+                },
+                onComplete: function(){
+                    $.daniuploader.addLog('#debug-container', 'default', 'All pending tranfers completed');
+                    location.reload();
+                },
+                onUploadProgress: function(id, percent){
+                    var percentStr = percent + '%';
+                    $.daniuploader.updateFileProgress(id, percentStr);
+                },
+                onUploadSuccess: function(id, data){
+                    $.daniuploader.addLog('#debug-container', 'success', 'Upload of file #' + id + ' completed');
+                    $.daniuploader.addLog('#debug-container', 'info', 'Server Response for file #' + id + ': ' + JSON.stringify(data));
+                    $.daniuploader.updateFileStatus(id, 'success', 'Upload Complete');
+                    $.daniuploader.updateFileProgress(id, '100%');
+                },
+                onUploadError: function(id, message){
+                    $.daniuploader.updateFileStatus(id, 'error', message);
+                    $.daniuploader.addLog('#debug-container', 'error', 'Failed to Upload file #' + id + ': ' + message);
+                },
+                onFileTypeError: function(file){
+                    $.daniuploader.addLog('#debug-container', 'error', 'File \'' + file.name + '\' cannot be added: must be an image');
+                },
+                onFileSizeError: function(file){
+                    $.daniuploader.addLog('#debug-container', 'error', 'File \'' + file.name + '\' cannot be added: size excess limit');
+                },
+                onFallbackMode: function(message){
+                    $.daniuploader.addLog('#debug-container', 'info', 'Browser not supported(do something else here!): ' + message);
+                }
+            });
+        });
+    </script>
 @endsection

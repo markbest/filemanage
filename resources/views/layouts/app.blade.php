@@ -11,6 +11,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.pjax.min.js') }}"></script>
     <script>
         window.Laravel = <?php echo json_encode(['csrfToken' => csrf_token(),]); ?>
     </script>
@@ -143,73 +146,9 @@
         </div>
     </aside>
     <div class="dislpayArrow"><a href="javascript:void(0);" onclick="displaynavbar(this)"></a></div>
-    <div class="right-content-box">
+    <div id="right-content-box" class="right-content-box">
         @yield('content')
     </div>
-
-    <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}" />
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/dmuploader-preview.js') }}"></script>
-    <script src="{{ asset('js/dmuploader.js') }}"></script>
-    <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
-    <script>
-        $(function(){
-            $('#drag-and-drop-zone').dmUploader({
-                url: '{{ URL("pictures/upload")}}',
-                dataType: 'json',
-                extraData:{'_token': $('input[name="_token"]').val()},
-                allowedTypes: 'image/*',
-                onInit: function(){
-                    $.daniuploader.addLog('#debug-container', 'default', 'Plugin initialized correctly');
-                },
-                onBeforeUpload: function(id){
-                    $.daniuploader.addLog('#debug-container', 'default', 'Starting the upload of #' + id);
-                    $.daniuploader.updateFileStatus(id, 'default', 'Uploading...');
-                },
-                onNewFile: function(id, file){
-                    $.daniuploader.addFile('#files-container', id, file);
-                    if(typeof FileReader !== "undefined"){
-                        var reader = new FileReader();
-                        var img = $('#files-container').find('.uploader-image-preview').eq(0);
-                        reader.onload = function (e){
-                            img.attr('src', e.target.result);
-                        }
-                        reader.readAsDataURL(file);
-                    }else{
-                        $('#uploader-files').find('.uploader-image-preview').remove();
-                    }
-                },
-                onComplete: function(){
-                    $.daniuploader.addLog('#debug-container', 'default', 'All pending tranfers completed');
-                    location.reload();
-                },
-                onUploadProgress: function(id, percent){
-                    var percentStr = percent + '%';
-                    $.daniuploader.updateFileProgress(id, percentStr);
-                },
-                onUploadSuccess: function(id, data){
-                    $.daniuploader.addLog('#debug-container', 'success', 'Upload of file #' + id + ' completed');
-                    $.daniuploader.addLog('#debug-container', 'info', 'Server Response for file #' + id + ': ' + JSON.stringify(data));
-                    $.daniuploader.updateFileStatus(id, 'success', 'Upload Complete');
-                    $.daniuploader.updateFileProgress(id, '100%');
-                },
-                onUploadError: function(id, message){
-                    $.daniuploader.updateFileStatus(id, 'error', message);
-                    $.daniuploader.addLog('#debug-container', 'error', 'Failed to Upload file #' + id + ': ' + message);
-                },
-                onFileTypeError: function(file){
-                    $.daniuploader.addLog('#debug-container', 'error', 'File \'' + file.name + '\' cannot be added: must be an image');
-                },
-                onFileSizeError: function(file){
-                    $.daniuploader.addLog('#debug-container', 'error', 'File \'' + file.name + '\' cannot be added: size excess limit');
-                },
-                onFallbackMode: function(message){
-                    $.daniuploader.addLog('#debug-container', 'info', 'Browser not supported(do something else here!): ' + message);
-                }
-            });
-        });
-    </script>
 </body>
 </html>
