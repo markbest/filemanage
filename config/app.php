@@ -167,6 +167,7 @@ return [
          * Package Service Providers...
          */
         App\Providers\PaymentServiceProvider::class,
+        HieuLe\Active\ActiveServiceProvider::class,
 
         //
 
@@ -227,6 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Payment' => App\Facades\PaymentGateway\PayFacade::class,
+        'Active' => HieuLe\Active\Facades\Active::class,
 
     ],
 

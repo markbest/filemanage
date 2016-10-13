@@ -1,18 +1,14 @@
 $(function(){
     $('.left-menu-aside dt').click(function(){
-        if($(this).hasClass('selected')){
-            $(this).removeClass('selected');
+        if($(this).parent().hasClass('active')){
+            $(this).parent().removeClass('active');
             $(this).parent().find('dd').slideUp('fast');
         }else{
-            $('.left-menu-aside dt').removeClass('selected');
+            $('.left-menu-aside dl').removeClass('active');
             $('.left-menu-aside dd').slideUp('fast');
-            $(this).addClass('selected');
+            $(this).parent().addClass('active');
             $(this).parent().find('dd').slideDown('fast');
         }
-    });
-    $('.left-menu-aside li a').click(function(){
-        $('.left-menu-aside li').removeClass('current');
-        $(this).parent().addClass('current');
     });
     $('.del-data').each(function(){
         $(this).click(function(){

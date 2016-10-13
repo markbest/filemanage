@@ -57,35 +57,51 @@
     </nav>
     <aside class="left-menu-aside">
         <div class="menu_dropdown">
-            <dl id="menu-picture">
-                <dt><i class="fa fa-picture-o menu_dropdown-text" aria-hidden="true"></i> 图片管理<i class="fa fa-caret-down menu_dropdown-arrow" aria-hidden="true"></i></dt>
+            <dl id="menu-picture" class="{{ active_class(if_uri_pattern(['albums', 'pictures']), 'active', '') }}">
+                <dt>
+                    <i class="fa fa-picture-o menu_dropdown-text" aria-hidden="true"></i> 图片管理
+                    <i class="fa fa-caret-down menu_dropdown-arrow" aria-hidden="true"></i>
+                </dt>
                 <dd>
                     <ul>
-                        <li><a href="{{ url('/albums') }}">相册管理</a></li>
-                        <li><a href="{{ url('/pictures') }}">图片管理</a></li>
+                        <li class="{{ active_class(if_uri_pattern(['albums']), 'current', '') }}">
+                            <a href="{{ url('/albums') }}">相册管理</a>
+                        </li>
+                        <li class="{{ active_class(if_uri_pattern(['pictures']), 'current', '') }}" >
+                            <a href="{{ url('/pictures') }}">图片管理</a>
+                        </li>
                     </ul>
                 </dd>
             </dl>
-            <dl id="menu-article">
-                <dt><i class="fa fa-briefcase menu_dropdown-text" aria-hidden="true"></i> 文档管理<i class="fa fa-caret-down menu_dropdown-arrow" aria-hidden="true"></i></dt>
+            <dl id="menu-article" class="{{ active_class(if_uri_pattern(['document']), 'active', '') }}">
+                <dt>
+                    <i class="fa fa-briefcase menu_dropdown-text" aria-hidden="true"></i> 文档管理
+                    <i class="fa fa-caret-down menu_dropdown-arrow" aria-hidden="true"></i>
+                </dt>
                 <dd>
                     <ul>
-                        <li><a _href="article-list.html" data-title="资讯管理" href="javascript:void(0)">文档管理</a></li>
+                        <li><a href="javascript:void(0)">文档管理</a></li>
                     </ul>
                 </dd>
             </dl>
-            <dl id="menu-admin">
-                <dt><i class="fa fa-user menu_dropdown-text" aria-hidden="true"></i> 用户管理<i class="fa fa-caret-down menu_dropdown-arrow" aria-hidden="true"></i></dt>
+            <dl id="menu-admin" class="{{ active_class(if_uri_pattern(['document']), 'active', '') }}">
+                <dt>
+                    <i class="fa fa-user menu_dropdown-text" aria-hidden="true"></i> 用户管理
+                    <i class="fa fa-caret-down menu_dropdown-arrow" aria-hidden="true"></i>
+                </dt>
                 <dd>
                     <ul>
-                        <li><a _href="admin-role.html" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
-                        <li><a _href="admin-permission.html" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
-                        <li><a _href="admin-list.html" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
+                        <li><a href="javascript:void(0)">角色管理</a></li>
+                        <li><a href="javascript:void(0)">权限管理</a></li>
+                        <li><a href="javascript:void(0)">管理员列表</a></li>
                     </ul>
                 </dd>
             </dl>
-            <dl id="menu-system">
-                <dt><i class="fa fa-tasks menu_dropdown-text" aria-hidden="true"></i> 系统管理<i class="fa fa-caret-down menu_dropdown-arrow" aria-hidden="true"></i></dt>
+            <dl id="menu-system" class="{{ active_class(if_uri_pattern(['document']), 'active', '') }}">
+                <dt>
+                    <i class="fa fa-tasks menu_dropdown-text" aria-hidden="true"></i> 系统管理
+                    <i class="fa fa-caret-down menu_dropdown-arrow" aria-hidden="true"></i>
+                </dt>
                 <dd>
                     <ul>
                         <li><a href="javascript:void(0)">系统设置</a></li>
