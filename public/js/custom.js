@@ -1,4 +1,5 @@
 $(function(){
+    /* 左侧导航栏效果 */
     $('.left-menu-aside dt').click(function(){
         if($(this).parent().hasClass('active')){
             $(this).parent().removeClass('active');
@@ -10,6 +11,8 @@ $(function(){
             $(this).parent().find('dd').slideDown('fast');
         }
     });
+
+    /* 删除文件再确认提示框 */
     $('.del-data').each(function(){
         $(this).click(function(){
             if(confirm("确定要删除数据吗")){
@@ -17,6 +20,8 @@ $(function(){
             }
         });
     });
+
+    /* 图片选中效果 */
     $('.album-img-list img').click(function(){
         if($(this).hasClass('selected')){
             $(this).next('input').prop("checked", false);
@@ -35,8 +40,10 @@ $(function(){
             $('.btn-delete-pic').hide();
             $('.btn-download-pic').hide();
         }
-        updateSelectDate();
+        updatePicSelectData();
     });
+
+    /* 相册伸缩效果 */
     $('.album-list-container h3').click(function(){
         if($(this).parent().hasClass('open')){
             $(this).parent().removeClass('open').addClass('closed');
@@ -44,14 +51,49 @@ $(function(){
             $(this).parent().removeClass('closed').addClass('open');
         }
     });
+
+    /* 图片批量删除确认提示框 */
     $('.btn-delete-pic').click(function(){
         var num = $('.album-img-list input:checked').length;
         if(confirm("确定要删除选中的" + num + "张图片吗")){
             $('#del-pictures').submit();
         }
     });
-    $('.all_checked').click(function(){
+
+    /* 图片全选效果 */
+    $('.all-check').click(function(){
         $(this).parents('.album-list-container').find('img').click();
+    });
+
+    /* 文件选中效果 */
+    $('.files-selected').click(function(){
+        if($('.file-list-container input:checked').length){
+            $('.btn-move-file').show();
+            $('.btn-delete-file').show();
+        }else{
+            $('.btn-move-file').hide();
+            $('.btn-delete-file').hide();
+        }
+        updateFileSelectData();
+    });
+
+    /* 文件夹选中效果 */
+    $('.folder-selected').click(function(){
+        if($('.file-list-container input:checked').length){
+            $('.btn-move-file').show();
+            $('.btn-delete-file').show();
+        }else{
+            $('.btn-move-file').hide();
+            $('.btn-delete-file').hide();
+        }
+    });
+
+    /* 文件批量删除确认提示框 */
+    $('.btn-delete-file').click(function(){
+        var num = $('.file-list-container input:checked').length;
+        if(confirm("确定要删除选中的" + num + "个文件吗")){
+            $('#del-files').submit();
+        }
     });
 });
 
@@ -64,7 +106,7 @@ function displaynavbar(obj){
         $("body").addClass("big-page");
     }
 }
-function updateSelectDate(){
+function updatePicSelectData(){
     var boxes = $('.album-img-list input');
     var selected = [];
     for(var i=0;i<boxes.length;i++){
@@ -73,4 +115,14 @@ function updateSelectDate(){
         }
     }
     $('input[name=del-pic-ids]').val(selected);
+}
+function updateFileSelectData(){
+    var boxes = $('.file-list-container input[class=files-selected]');
+    var selected = [];
+    for(var i=0;i<boxes.length;i++){
+        if(boxes[i].checked == true){
+            selected.push(boxes[i].value);
+        }
+    }
+    $('input[name=del-file-ids]').val(selected);
 }

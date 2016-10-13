@@ -73,14 +73,19 @@
                     </ul>
                 </dd>
             </dl>
-            <dl id="menu-article" class="{{ active_class(if_uri_pattern(['document']), 'active', '') }}">
+            <dl id="menu-article" class="{{ active_class(if_uri_pattern(['folders', 'files']), 'active', '') }}">
                 <dt>
-                    <i class="fa fa-briefcase menu_dropdown-text" aria-hidden="true"></i> 文档管理
+                    <i class="fa fa-briefcase menu_dropdown-text" aria-hidden="true"></i> 文件管理
                     <i class="fa fa-caret-down menu_dropdown-arrow" aria-hidden="true"></i>
                 </dt>
                 <dd>
                     <ul>
-                        <li><a href="javascript:void(0)">文档管理</a></li>
+                        <li class="{{ active_class(if_uri_pattern(['folders']), 'current', '') }}">
+                            <a href="{{ url('/folders') }}">文件夹管理</a>
+                        </li>
+                        <li class="{{ active_class(if_uri_pattern(['files']), 'current', '') }}">
+                            <a href="{{ url('/files') }}">文件管理</a>
+                        </li>
                     </ul>
                 </dd>
             </dl>

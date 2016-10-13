@@ -26,7 +26,7 @@ class PicturesController extends Controller
             $pictures[$data->album_id]['name'] = $data->album_name ? $data->album_name : '尚未排入相册的图片';
         }
         krsort($pictures);
-        return view('picture',['pictures'=>$pictures,'albums'=>$albums]);
+        return view('pictures',['pictures'=>$pictures,'albums'=>$albums]);
     }
 
     public function upload(Request $request){

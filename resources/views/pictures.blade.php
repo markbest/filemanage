@@ -25,7 +25,7 @@
                                             <em>{{ count($picture['src']) }}张</em>
                                         </div>
                                         <div class="right">
-                                            <input type="checkbox" class="all_checked" id="all_checked_{{ $key }}" value="">&nbsp;<label for="all_checked_{{ $key }}">全选</label>
+                                            <input type="checkbox" class="all-check" id="all_checked_{{ $key }}"><label for="all_checked_{{ $key }}">全选</label>
                                         </div>
                                     </h3>
                                     <div class="album-img-list">
@@ -81,7 +81,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h4 class="modal-title" id="myModalLabel"><label>添加相册</label></h4>
+                                    <h4 class="modal-title" id="myModalLabel"><label>移动到相册</label></h4>
                                 </div>
                                 <form class="form-horizontal" id="move-albums" action="{{ url('pictures/move')}}" method="POST">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
