@@ -14,19 +14,8 @@ class PicturesController extends Controller
 {
     public function index(){
         $albums = Album::all();
-        $collection = DB::table('albums_pictures')
-                    ->leftjoin('albums', 'albums_pictures.album_id', '=', 'albums.id')
-                    ->select('albums_pictures.*', 'albums.name as album_name')
-                    ->orderBy('albums_pictures.id','desc')
-                    ->get()
-                    ->toArray();
-        $pictures = array();
-        foreach($collection as $data){
-            $pictures[$data->album_id]['src'][$data->id] = $data->src;
-            $pictures[$data->album_id]['name'] = $data->album_name ? $data->album_name : '尚未排入相册的图片';
-        }
-        krsort($pictures);
-        return view('pictures',['pictures'=>$pictures,'albums'=>$albums]);
+        $pictures = Picture::where('album_id','0')->get();
+        return view('pictures',['pictures'=>$pictures, 'albums'=>$albums]);
     }
 
     public function upload(Request $request){

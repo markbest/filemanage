@@ -6,39 +6,63 @@
             <div class="col-md-12">
                 <div class="panel panel-default panel-admin">
                     <div class="panel-heading">
-                        <div class="col-sm-4"><i class="fa fa-home"></i><b>图片管理</b> > 图片管理</div>
+                        <div class="col-sm-4"><i class="fa fa-home"></i>图片管理</div>
                         <div class="col-sm-8 align-right">
                             <button type="button" class="btn-delete-pic admin-btn btn btn-danger"><i class="fa fa-trash"></i>删除</button>
                             <button type="button" class="btn-download-pic admin-btn btn btn-primary"><i class="fa fa-download"></i>下载</button>
                             <button type="button" class="btn-move-album admin-btn btn btn-primary" data-toggle="modal" data-target="#move_item"><i class="fa fa-hand-rock-o"></i>移动到相册</button>
+                            <button type="button" class="admin-btn btn btn-primary" data-toggle="modal" data-target="#add_album"><i class="fa fa-plus-circle"></i>添加相册</button>
                             <button type="button" class="admin-btn btn btn-primary" data-toggle="modal" data-target="#add_item"><i class="fa fa-plus-circle"></i>上传图片</button>
                         </div>
                     </div>
                     <div class="panel-body">
-                        @foreach($pictures as $key=>$picture)
-                            <div class="album-list-container">
-                                <div class="col-sm-12 open">
-                                    <h3>
-                                        <div class="left">
-                                            {{ $picture['name'] }}
-                                            <i class="fa fa-chevron-down"></i>
-                                            <em>{{ count($picture['src']) }}张</em>
-                                        </div>
-                                        <div class="right">
-                                            <input type="checkbox" class="all-check" id="all_checked_{{ $key }}"><label for="all_checked_{{ $key }}">全选</label>
-                                        </div>
-                                    </h3>
-                                    <div class="album-img-list">
-                                        @foreach($picture['src'] as $id => $pic)
-                                        <a href="javascript:void(0);" data-link="{{ asset($pic) }}">
-                                            <img src="{{ asset($pic) }}">
-                                            <input style="display:none;" type="checkbox" name="pic[]" value="{{ $id }}" form="move-albums" />
-                                        </a>
-                                        @endforeach
+                        @foreach($albums as $album)
+                        <div class="album-list-container">
+                            <div class="col-sm-12 open">
+                                <h3>
+                                    <div class="left">
+                                        {{ $album->name}}<i class="fa fa-chevron-down"></i><em>{{ count($album->getPictureList()) }}张</em>
                                     </div>
+                                    <div class="right">
+                                        <form action="{{ URL('albums/'.$album->id) }}" method="POST" style="display:inline;">
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <button type="button" class="btn-delete-album del-data btn btn-danger"><i class="fa fa-trash"></i>删除</button>
+                                        </form>
+                                        <input type="checkbox" class="all-check" id="all_checked_{{ $album->id }}"><label for="all_checked_{{ $album->id }}">全选</label>
+                                    </div>
+                                </h3>
+                                <div class="album-img-list">
+                                    @foreach($album->getPictureList() as $pic)
+                                        <a href="javascript:void(0);" data-link="{{ asset($pic->src) }}">
+                                            <img src="{{ asset($pic->src) }}">
+                                            <input style="display:none;" type="checkbox" name="pic[]" value="{{ $pic->id }}" form="move-albums" />
+                                        </a>
+                                    @endforeach
                                 </div>
                             </div>
+                        </div>
                         @endforeach
+                        <div class="album-list-container">
+                            <div class="col-sm-12 open">
+                                <h3>
+                                    <div class="left">
+                                        尚未移到相册的图片<i class="fa fa-chevron-down"></i><em>{{ count($pictures) }}张</em>
+                                    </div>
+                                    <div class="right">
+                                        <input type="checkbox" class="all-check" id="all_checked_0"><label for="all_checked_0">全选</label>
+                                    </div>
+                                </h3>
+                                <div class="album-img-list">
+                                    @foreach($pictures as $pic)
+                                        <a href="javascript:void(0);" data-link="{{ asset($pic->src) }}">
+                                            <img src="{{ asset($pic->src) }}">
+                                            <input style="display:none;" type="checkbox" name="pic[]" value="{{ $pic->id }}" form="move-albums" />
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal fade" id="add_item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
                         <div class="modal-dialog">
@@ -89,12 +113,43 @@
                                         <div class="form-group">
                                             <label class="control-label">选择相册：</label>
                                             <div class="control-content">
-                                                <select name="album" class="form-control" required="required">
+                                                <select name="album" class="form-control">
                                                     <option value=""></option>
                                                     @foreach($albums as $album)
                                                     <option value="{{ $album->id }}">{{ $album->name }}</option>
                                                     @endforeach
                                                 </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="admin-btn btn btn-default" data-dismiss="modal">取消</button>
+                                        <button type="submit" class="admin-btn btn btn-primary"><i class="fa fa-floppy-o"></i>保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="add_album" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title" id="myModalLabel"><label>添加相册</label></h4>
+                                </div>
+                                <form class="form-horizontal" action="{{ url('albums')}}" method="POST">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label class="control-label">相册名称：</label>
+                                            <div class="control-content">
+                                                <input type="text" name="name" class="form-control" required="required">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">相册描述：</label>
+                                            <div class="control-content">
+                                                <textarea name="description" class="form-control" required="required"></textarea>
                                             </div>
                                         </div>
                                     </div>

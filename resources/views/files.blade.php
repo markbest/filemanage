@@ -6,10 +6,11 @@
             <div class="col-md-12">
                 <div class="panel panel-default panel-admin">
                     <div class="panel-heading">
-                        <div class="col-sm-4"><i class="fa fa-home"></i><b>文件管理</b> > 文件管理</div>
+                        <div class="col-sm-4"><i class="fa fa-home"></i>文件管理</div>
                         <div class="col-sm-8 align-right">
                             <button type="button" class="btn-delete-file admin-btn btn btn-danger"><i class="fa fa-trash"></i>删除</button>
                             <button type="button" class="btn-move-file admin-btn btn btn-primary" data-toggle="modal" data-target="#move_item"><i class="fa fa-hand-rock-o"></i>移动到</button>
+                            <button type="button" class="admin-btn btn btn-primary" data-toggle="modal" data-target="#add_folder"><i class="fa fa-plus-circle"></i>添加文件夹</button>
                             <button type="button" class="admin-btn btn btn-primary" data-toggle="modal" data-target="#add_item"><i class="fa fa-plus-circle"></i>上传文件</button>
                         </div>
                     </div>
@@ -20,16 +21,14 @@
                                     <div class="col-sm-12">
                                         <table class="table table-striped file-list-container">
                                             <thead>
-                                            <tr>
-                                                <th class="col-sm-4 align-center">
-                                                    <input type="checkbox" class="all-check" />文件名
-                                                </th>
-                                                <th class="col-sm-1 align-center">大小</th>
-                                                <th class="col-sm-1 align-center">修改日期</th>
-                                            </tr>
+                                                <tr>
+                                                    <th class="col-sm-4 align-center"><input type="checkbox" class="all-check" />文件名</th>
+                                                    <th class="col-sm-1 align-center">大小</th>
+                                                    <th class="col-sm-1 align-center">修改日期</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach ($folders as $folder)
+                                                @foreach ($folders as $folder)
                                                 <tr>
                                                     <td class="align-center">
                                                         <input type="checkbox" class="folder-selected" name="folders[]" id="fold_{{ $folder->id }}"/>
@@ -38,8 +37,9 @@
                                                     <td class="align-center"> - </td>
                                                     <td class="align-center">{{ $folder->created_at }}</td>
                                                 </tr>
-                                            @endforeach
-                                            @foreach ($files as $file)
+                                                @endforeach
+
+                                                @foreach ($files as $file)
                                                 <tr>
                                                     <td class="align-center">
                                                         <input type="checkbox" class="files-selected" name="files[]" value="{{ $file->id }}" id="file_{{ $file->id }}" form="move-folders"/>
@@ -48,7 +48,7 @@
                                                     <td class="align-center">{{ $file->size }}</td>
                                                     <td class="align-center">{{ $file->created_at }}</td>
                                                 </tr>
-                                            @endforeach
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -72,7 +72,7 @@
                                                 <select name="folder" class="form-control" required="required">
                                                     <option value=""></option>
                                                     @foreach($folders as $folder)
-                                                        <option value="{{ $folder->id }}">{{ $folder->name }}</option>
+                                                    <option value="{{ $folder->id }}">{{ $folder->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -119,6 +119,37 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="add_folder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title" id="myModalLabel"><label>添加文件夹</label></h4>
+                                </div>
+                                <form class="form-horizontal" action="{{ url('folders')}}" method="POST">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label class="control-label">文件夹名称：</label>
+                                            <div class="control-content">
+                                                <input type="text" name="name" class="form-control" required="required">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">文件夹描述：</label>
+                                            <div class="control-content">
+                                                <textarea name="description" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="admin-btn btn btn-default" data-dismiss="modal">取消</button>
+                                        <button type="submit" class="admin-btn btn btn-primary"><i class="fa fa-floppy-o"></i>保存</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

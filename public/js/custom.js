@@ -80,10 +80,8 @@ $(function(){
     /* 文件夹选中效果 */
     $('.folder-selected').click(function(){
         if($('.file-list-container input:checked').length){
-            $('.btn-move-file').show();
             $('.btn-delete-file').show();
         }else{
-            $('.btn-move-file').hide();
             $('.btn-delete-file').hide();
         }
     });

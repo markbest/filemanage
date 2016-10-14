@@ -11,15 +11,9 @@ use Redirect;
 
 class AlbumsController extends Controller
 {
-    public function index(){
-        $albums = Album::all();
-        return view('albums')->with('albums',$albums);
-    }
-
     public function store(Request $request){
         $this->validate($request, [
-            'name' => 'required|unique:albums',
-            'description' => 'required',
+            'name' => 'required|unique:albums'
         ]);
 
         $album = New Album;
@@ -27,7 +21,7 @@ class AlbumsController extends Controller
         $album->description = $request->input('description');
         $album->created_at  = date('Y-m-d h:i:s',time());
         if($album->save()){
-            return Redirect::to('albums');
+            return Redirect::to('pictures');
         }else{
             return Redirect::back()->withInput()->withErrors('更新失败');
         }
@@ -37,6 +31,6 @@ class AlbumsController extends Controller
     {
         Album::find($id)->delete();
         Picture::where('album_id',$id)->update(['album_id'=>0]);
-        return Redirect::to('albums');
+        return Redirect::to('pictures');
     }
 }
