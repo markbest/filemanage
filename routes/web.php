@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth']], function()
     Route::post('pictures/delete', 'PicturesController@delete');
 
     Route::resource('folders', 'FoldersController');
+    Route::get('folders/delete/{id}', 'FoldersController@delete');
 
     Route::resource('files', 'FilesController');
     Route::post('files/upload', 'FilesController@upload');

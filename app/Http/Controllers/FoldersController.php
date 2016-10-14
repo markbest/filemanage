@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Folder;
+use App\File;
 use Redirect;
 
 class FoldersController extends Controller
@@ -26,9 +27,10 @@ class FoldersController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
         Folder::find($id)->delete();
+        File::where('folders_id',$id)->update(['folders_id'=>0]);
         return Redirect::to('files');
     }
 }

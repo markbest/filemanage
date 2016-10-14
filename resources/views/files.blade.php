@@ -30,7 +30,7 @@
                                             <tbody>
                                                 @foreach ($folders as $folder)
                                                 <tr>
-                                                    <td class="align-center">
+                                                    <td class="align-center fold-list" data-id="{{ $folder->id }}">
                                                         <input type="checkbox" class="folder-selected" name="folders[]" id="fold_{{ $folder->id }}"/>
                                                         <img src="{{ asset('images/folder.png') }}"><label for="fold_{{ $folder->id }}">{{ $folder->name }}</label>
                                                     </td>
@@ -163,7 +163,27 @@
     </div>
     <script src="{{ asset('js/dmuploader-preview.js') }}"></script>
     <script src="{{ asset('js/dmuploader.js') }}"></script>
+    <script src="{{ asset('js/BootstrapMenu.min.js') }}"></script>
     <script>
+        var menu = new BootstrapMenu('.fold-list', {
+            fetchElementData: function($rowElem) {
+                return $rowElem;
+            },
+            actions: [{
+                name: '下载',
+                iconClass: 'fa-download',
+                onClick: function() {
+                    console.log('download');
+                }
+            },{
+                name: '删除',
+                iconClass: 'fa-trash',
+                onClick: function($row) {
+                    var id = $row.attr('data-id');
+                    location.href = "{{ asset('folders/delete') }}" + '/' + id;
+                }
+            }]
+        });
         $(function(){
             $('#drag-and-drop-zone').dmUploader({
                 url: '{{ URL("files/upload")}}',

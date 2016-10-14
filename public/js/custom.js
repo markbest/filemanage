@@ -79,11 +79,7 @@ $(function(){
 
     /* 文件夹选中效果 */
     $('.folder-selected').click(function(){
-        if($('.file-list-container input:checked').length){
-            $('.btn-delete-file').show();
-        }else{
-            $('.btn-delete-file').hide();
-        }
+        
     });
 
     /* 文件批量删除确认提示框 */
