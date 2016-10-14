@@ -79,7 +79,7 @@ $(function(){
 
     /* 文件夹选中效果 */
     $('.folder-selected').click(function(){
-        
+
     });
 
     /* 文件批量删除确认提示框 */
@@ -88,6 +88,11 @@ $(function(){
         if(confirm("确定要删除选中的" + num + "个文件吗")){
             $('#del-files').submit();
         }
+    });
+
+    /* 返回上一级目录 */
+    $('.prev-back').click(function(){
+        history.go(-1);
     });
 });
 

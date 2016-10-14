@@ -72,4 +72,10 @@ class FilesController extends Controller
         }
         return Redirect::to('files');
     }
+
+    public function folder($id){
+        $folders = array();
+        $files = File::where('folders_id',$id)->get();
+        return view('files',['files'=>$files, 'folders'=>$folders]);
+    }
 }

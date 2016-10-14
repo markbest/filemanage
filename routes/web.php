@@ -29,4 +29,5 @@ Route::group(['middleware' => ['auth']], function()
     Route::post('files/upload', 'FilesController@upload');
     Route::post('files/move', 'FilesController@move');
     Route::post('files/delete', 'FilesController@delete');
+    Route::get('files/folder/{id}', 'FilesController@folder');
 });

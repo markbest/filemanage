@@ -218,3 +218,4 @@ input[class=all-check]{margin-right:5px;}
 .file-list-container label{font-weight:normal;margin-left:5px;font-size:12px;}
 .file-list-container img{margin-top:-5px;}
 .btn-move-file,.btn-delete-file{display:none;}
+.fold-list a{color:#333;}

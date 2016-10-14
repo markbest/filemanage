@@ -28,17 +28,31 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($folders as $folder)
+                                                @if(count($folders))
+                                                    @foreach ($folders as $folder)
+                                                    <tr>
+                                                        <td class="align-center fold-list" data-id="{{ $folder->id }}">
+                                                            <input type="checkbox" class="folder-selected" name="folders[]" id="fold_{{ $folder->id }}"/>
+                                                            <img src="{{ asset('images/folder.png') }}">
+                                                            <label for="fold_{{ $folder->id }}"><a title="{{ $folder->name }}" href="{{ url('files/folder/'.$folder->id) }}}">{{ $folder->name }}</a></label>
+                                                        </td>
+                                                        <td class="align-center"> - </td>
+                                                        <td class="align-center">{{ $folder->created_at }}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                @endif
+
+                                                @if(strpos(Request::getRequestUri(),'/folder/'))
                                                 <tr>
-                                                    <td class="align-center fold-list" data-id="{{ $folder->id }}">
-                                                        <input type="checkbox" class="folder-selected" name="folders[]" id="fold_{{ $folder->id }}"/>
-                                                        <img src="{{ asset('images/folder.png') }}"><label for="fold_{{ $folder->id }}">{{ $folder->name }}</label>
+                                                    <td class="align-center">
+                                                        <input type="checkbox" />
+                                                        <img src="{{ asset('images/file.png') }}">
+                                                        <label><a href="javascript:void(0);" class="prev-back">...</a></label>
                                                     </td>
                                                     <td class="align-center"> - </td>
-                                                    <td class="align-center">{{ $folder->created_at }}</td>
+                                                    <td class="align-center"> - </td>
                                                 </tr>
-                                                @endforeach
-
+                                                @endif
                                                 @foreach ($files as $file)
                                                 <tr>
                                                     <td class="align-center">
