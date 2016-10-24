@@ -59,12 +59,10 @@
         <div class="menu_dropdown">
             <ul>
                 <li class="{{ active_class(if_uri_pattern(['pictures']), 'active', '') }}">
-                    <i class="fa fa-picture-o menu_dropdown-text" aria-hidden="true"></i>
-                    <a href="{{ url('/pictures') }}">图片管理</a>
+                    <a href="{{ url('/pictures') }}"><i class="fa fa-picture-o menu_dropdown-text"></i>图片管理</a>
                 </li>
                 <li class="{{ active_class(if_uri_pattern(['files']), 'active', '') }}">
-                    <i class="fa fa-briefcase menu_dropdown-text" aria-hidden="true"></i>
-                    <a href="{{ url('/files') }}">文件管理</a>
+                    <a href="{{ url('/files') }}"> <i class="fa fa-briefcase menu_dropdown-text"></i>文件管理</a>
                 </li>
             </ul>
         </div>

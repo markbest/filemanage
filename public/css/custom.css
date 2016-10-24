@@ -12,7 +12,7 @@ body{font-family:sans-serif;}
 .admin-btn{padding:4px 10px;font-size:12px;}
 .del-data{padding:2px 10px;font-size:12px;}
 i.fa{margin-right:5px;}
-.panel-admin .panel-heading{height:40px;line-height:40px;padding:0px;margin-top:6px;}
+.panel-admin .panel-heading{height:40px;line-height:40px;padding:0px;}
 .form-horizontal .control-label{width:135px;float:left;}
 .form-horizontal .control-content{float:left;margin-right:10px;}
 .modal-content .form-horizontal input,.modal-content .form-horizontal select{width:400px;}
@@ -91,16 +91,16 @@ input[class=all-check]{margin-right:5px;}
 
 /* left menu aside */
 .big-page .left-menu-aside{left:-200px;}
-.left-menu-aside{position:absolute;top:44px;bottom:0;left:0;width:199px;z-index:99;overflow:auto;background-color:rgba(238,238,238,0.98);border-right:1px solid #e5e5e5;}
+.left-menu-aside{position:absolute;top:40px;bottom:0;left:0;width:199px;z-index:99;overflow:auto;background-color:rgba(238,238,238,0.98);border-right:1px solid #e5e5e5;}
 .left-menu-aside .menu_dropdown ul{margin:0px;padding:0px;}
 .left-menu-aside .menu_dropdown ul li{list-style:none;height:35px;line-height:35px;margin:2px 0px;}
 .left-menu-aside .menu_dropdown ul li:hover,.left-menu-aside .menu_dropdown ul li.active{background-color:#ffffff;}
 .left-menu-aside .menu_dropdown ul li i{margin-left:15px;}
-.left-menu-aside .menu_dropdown ul li a,.left-menu-aside .menu_dropdown ul li a:hover{color:#333;text-decoration:none;}
+.left-menu-aside .menu_dropdown ul li a,.left-menu-aside .menu_dropdown ul li a:hover{color:#333;text-decoration:none;display:block;}
 
 /* right content box */
 .big-page .right-content-box,.big-page .dislpayArrow,.big-page .breadcrumb{left:0px;}
-.right-content-box{position:absolute;top:44px;right:0;bottom:0;left:199px;overflow:hidden;background-color:#fff;}
+.right-content-box{position:absolute;top:40px;right:0;bottom:0;left:199px;overflow-y:scroll;background-color:#fff;}
 .right-content-box .col-md-12{padding:0px;}
 .right-content-box .col-md-12 .panel-default{border:0px;}
 
