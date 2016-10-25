@@ -15,3 +15,5 @@
 - 配置env数据库信息
 - 安装数据库：php artisan migrate
 
+# Demo
+- http://manage.mark-here.com/  admin@admin.com  123456

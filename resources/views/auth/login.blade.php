@@ -12,7 +12,7 @@
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <div class="col-md-12">
-                                <input id="email" type="email" class="form-control" name="email" value="mark@imikoko.com" required>
+                                <input id="email" type="email" class="form-control" name="email" value="admin@admin.com" required>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
