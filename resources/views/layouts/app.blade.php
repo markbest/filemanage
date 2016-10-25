@@ -13,7 +13,6 @@
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.pjax.min.js') }}"></script>
     <script>
         window.Laravel = <?php echo json_encode(['csrfToken' => csrf_token(),]); ?>
     </script>
@@ -58,7 +57,7 @@
     <aside class="left-menu-aside">
         <div class="menu_dropdown">
             <ul>
-                <li class="{{ active_class(if_uri_pattern(['pictures']), 'active', '') }}">
+                <li class="{{ active_class(if_uri_pattern(['pictures','/']), 'active', '') }}">
                     <a href="{{ url('/pictures') }}"><i class="fa fa-picture-o menu_dropdown-text"></i>图片管理</a>
                 </li>
                 <li class="{{ active_class(if_uri_pattern(['files*']), 'active', '') }}">

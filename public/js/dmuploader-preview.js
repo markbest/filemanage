@@ -11,7 +11,6 @@
 
 		addFile: function(id, i, file){
 			var template = '<div id="uploader-file' + i + '">' +
-				'<img src="" class="uploader-image-preview" />' +
 				'<span class="uploader-file-id">#' + i + '</span> - ' + file.name + ' <span class="uploader-file-size">(' + $.daniuploader.humanizeSize(file.size) + ')</span><br />Status: <span class="uploader-file-status">Waiting to upload</span>'+
 				'<div class="progress progress-striped active">'+
 				'<div class="progress-bar" role="progressbar" style="width: 0%;">'+

@@ -77,11 +77,6 @@ $(function(){
         updateFileSelectData();
     });
 
-    /* 文件夹选中效果 */
-    $('.folder-selected').click(function(){
-
-    });
-
     /* 文件批量删除确认提示框 */
     $('.btn-delete-file').click(function(){
         var num = $('.file-list-container input:checked').length;
