@@ -61,7 +61,7 @@
                 <li class="{{ active_class(if_uri_pattern(['pictures']), 'active', '') }}">
                     <a href="{{ url('/pictures') }}"><i class="fa fa-picture-o menu_dropdown-text"></i>图片管理</a>
                 </li>
-                <li class="{{ active_class(if_uri_pattern(['files']), 'active', '') }}">
+                <li class="{{ active_class(if_uri_pattern(['files*']), 'active', '') }}">
                     <a href="{{ url('/files') }}"> <i class="fa fa-briefcase menu_dropdown-text"></i>文件管理</a>
                 </li>
             </ul>

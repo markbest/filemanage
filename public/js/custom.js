@@ -89,11 +89,6 @@ $(function(){
             $('#del-files').submit();
         }
     });
-
-    /* 返回上一级目录 */
-    $('.prev-back').click(function(){
-        history.go(-1);
-    });
 });
 
 function displaynavbar(obj){

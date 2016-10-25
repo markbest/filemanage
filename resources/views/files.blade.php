@@ -22,19 +22,35 @@
                                         <table class="table table-striped file-list-container">
                                             <thead>
                                                 <tr>
-                                                    <th class="col-sm-4 align-center"><input type="checkbox" class="all-check" />文件名</th>
+                                                    <th class="col-sm-4 align-center">文件名</th>
                                                     <th class="col-sm-1 align-center">大小</th>
                                                     <th class="col-sm-1 align-center">修改日期</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @if(strpos(Request::getRequestUri(),'/folder/'))
+                                                    <tr>
+                                                        <td class="align-center">
+                                                            <input type="checkbox" disabled />
+                                                            <img src="{{ asset('images/file.png') }}">
+                                                            @if($parent_id)
+                                                            <label><a href="{{ url('files/folder/'.$parent_id) }}">...</a></label>
+                                                            @else
+                                                            <label><a href="{{ url('files') }}">...</a></label>
+                                                            @endif
+                                                        </td>
+                                                        <td class="align-center"> - </td>
+                                                        <td class="align-center"> - </td>
+                                                    </tr>
+                                                @endif
+
                                                 @if(count($folders))
                                                     @foreach ($folders as $folder)
                                                     <tr>
                                                         <td class="align-center fold-list" data-id="{{ $folder->id }}">
                                                             <input type="checkbox" disabled class="folder-selected" name="folders[]" id="fold_{{ $folder->id }}"/>
                                                             <img src="{{ asset('images/folder.png') }}">
-                                                            <label for="fold_{{ $folder->id }}"><a title="{{ $folder->name }}" href="{{ url('files/folder/'.$folder->id) }}}">{{ $folder->name }}</a></label>
+                                                            <label for="fold_{{ $folder->id }}"><a title="{{ $folder->name }}" href="{{ url('files/folder/'.$folder->id) }}">{{ $folder->name }}</a></label>
                                                         </td>
                                                         <td class="align-center"> - </td>
                                                         <td class="align-center">{{ $folder->created_at }}</td>
@@ -42,17 +58,6 @@
                                                     @endforeach
                                                 @endif
 
-                                                @if(strpos(Request::getRequestUri(),'/folder/'))
-                                                <tr>
-                                                    <td class="align-center">
-                                                        <input type="checkbox" disabled />
-                                                        <img src="{{ asset('images/file.png') }}">
-                                                        <label><a href="javascript:void(0);" class="prev-back">...</a></label>
-                                                    </td>
-                                                    <td class="align-center"> - </td>
-                                                    <td class="align-center"> - </td>
-                                                </tr>
-                                                @endif
                                                 @foreach ($files as $file)
                                                 <tr>
                                                     <td class="align-center">
@@ -83,12 +88,7 @@
                                         <div class="form-group">
                                             <label class="control-label">选择文件夹：</label>
                                             <div class="control-content">
-                                                <select name="folder" class="form-control" required="required">
-                                                    <option value=""></option>
-                                                    @foreach($folders as $folder)
-                                                    <option value="{{ $folder->id }}">{{ $folder->name }}</option>
-                                                    @endforeach
-                                                </select>
+                                                {!! getAllFolderSelectList() !!}
                                             </div>
                                         </div>
                                     </div>
@@ -150,6 +150,7 @@
                                             <label class="control-label">文件夹名称：</label>
                                             <div class="control-content">
                                                 <input type="text" name="name" class="form-control" required="required">
+                                                <input style="display:none;" type="text" name="parent_id" value="{{ $current_id }}" />
                                             </div>
                                         </div>
                                         <div class="form-group">

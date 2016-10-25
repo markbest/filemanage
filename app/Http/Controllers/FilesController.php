@@ -12,9 +12,9 @@ use Redirect;
 class FilesController extends Controller
 {
     public function index(){
-        $folders = Folder::all();
+        $folders = Folder::where('parent_id','0')->get();
         $files = File::where('folders_id','0')->get();
-        return view('files',['files'=>$files, 'folders'=>$folders]);
+        return view('files',['files'=>$files, 'folders'=>$folders, 'current_id'=>0]);
     }
 
     public function upload(Request $request){
@@ -74,8 +74,9 @@ class FilesController extends Controller
     }
 
     public function folder($id){
-        $folders = array();
+        $folders = Folder::where('parent_id',$id)->get();
+        $current_folders = Folder::find($id);
         $files = File::where('folders_id',$id)->get();
-        return view('files',['files'=>$files, 'folders'=>$folders]);
+        return view('files',['files'=>$files, 'folders'=>$folders, 'current_id'=>$current_folders->id, 'parent_id'=>$current_folders->parent_id]);
     }
 }

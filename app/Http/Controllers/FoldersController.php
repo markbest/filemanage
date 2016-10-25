@@ -20,8 +20,13 @@ class FoldersController extends Controller
         $folder->name        = $request->input('name');
         $folder->description = $request->input('description');
         $folder->created_at  = date('Y-m-d h:i:s',time());
+        $folder->parent_id   = (int)$request->input('parent_id');
         if($folder->save()){
-            return Redirect::to('files');
+            if($folder->parent_id){
+                return Redirect::to('files/folder/'.$folder->parent_id);
+            }else{
+                return Redirect::to('files');
+            }
         }else{
             return Redirect::back()->withInput()->withErrors('更新失败');
         }
@@ -29,8 +34,16 @@ class FoldersController extends Controller
 
     public function delete($id)
     {
-        Folder::find($id)->delete();
+        $folder = Folder::find($id);
+        $parent_id = $folder->parent_id;
+        $folder->delete();
+
+        Folder::where('parent_id', $id)->delete();
         File::where('folders_id',$id)->update(['folders_id'=>0]);
-        return Redirect::to('files');
+        if($parent_id){
+            return Redirect::to('files/folder/'.$folder->parent_id);
+        }else{
+            return Redirect::to('files');
+        }
     }
 }
