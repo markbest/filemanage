@@ -60,7 +60,7 @@
 
                                                 @foreach ($files as $file)
                                                 <tr>
-                                                    <td class="align-center">
+                                                    <td class="align-center file-list" data-id="{{ $file->id }}">
                                                         <input type="checkbox" class="files-selected" name="files[]" value="{{ $file->id }}" id="file_{{ $file->id }}" form="move-folders"/>
                                                         <img src="{{ asset('images/file.png') }}"><label for="file_{{ $file->id }}">{{ $file->name }}</label>
                                                     </td>
@@ -180,22 +180,29 @@
     <script src="{{ asset('js/dmuploader.js') }}"></script>
     <script src="{{ asset('js/BootstrapMenu.min.js') }}"></script>
     <script>
-        var menu = new BootstrapMenu('.fold-list', {
+        var fold = new BootstrapMenu('.fold-list', {
+            fetchElementData: function($rowElem) {
+                return $rowElem;
+            },
+            actions: [{
+                name: '删除文件夹',
+                iconClass: 'fa-trash',
+                onClick: function($row) {
+                    var id = $row.attr('data-id');
+                    location.href = "{{ asset('folders/delete') }}" + '/' + id;
+                }
+            }]
+        });
+        var file = new BootstrapMenu('.file-list', {
             fetchElementData: function($rowElem) {
                 return $rowElem;
             },
             actions: [{
                 name: '下载',
                 iconClass: 'fa-download',
-                onClick: function() {
-                    console.log('download');
-                }
-            },{
-                name: '删除',
-                iconClass: 'fa-trash',
                 onClick: function($row) {
                     var id = $row.attr('data-id');
-                    location.href = "{{ asset('folders/delete') }}" + '/' + id;
+                    location.href = "{{ asset('files/download') }}" + '/' + id;
                 }
             }]
         });

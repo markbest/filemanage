@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Folder;
 use App\File;
 use Redirect;
+use Illuminate\Support\Facades\Response;
 
 class FilesController extends Controller
 {
@@ -78,5 +79,16 @@ class FilesController extends Controller
         $current_folders = Folder::find($id);
         $files = File::where('folders_id',$id)->get();
         return view('files',['files'=>$files, 'folders'=>$folders, 'current_id'=>$current_folders->id, 'parent_id'=>$current_folders->parent_id]);
+    }
+
+    public function download($id){
+        $file = File::find($id);
+        $newfile = public_path(). '/'. $file->link;
+
+        $headers = array(
+            'Content-Type: application/'.$file->type,
+        );
+
+        return Response::download($newfile, $file->name, $headers);
     }
 }

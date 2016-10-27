@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Picture;
 use App\Album;
 use Redirect;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 
 class PicturesController extends Controller
 {
@@ -73,5 +73,21 @@ class PicturesController extends Controller
             $picture->delete();
         }
         return Redirect::to('pictures');
+    }
+
+    public function download($id){
+        $picture = Picture::find($id)->src;
+        $picture_type_array = explode('.',$picture);
+        $picture_name_array = explode('/',$picture);
+
+        $picture_type = end($picture_type_array);
+        $picture_name = end($picture_name_array);
+        $file = public_path(). '/'. $picture;
+
+        $headers = array(
+            'Content-Type: application/'.$picture_type,
+        );
+
+        return Response::download($file, $picture_name, $headers);
     }
 }

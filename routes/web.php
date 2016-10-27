@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth']], function()
     Route::post('pictures/upload', 'PicturesController@upload');
     Route::post('pictures/move', 'PicturesController@move');
     Route::post('pictures/delete', 'PicturesController@delete');
+    Route::get('pictures/download/{id}', 'PicturesController@download');
 
     Route::resource('folders', 'FoldersController');
     Route::get('folders/delete/{id}', 'FoldersController@delete');
@@ -30,4 +31,5 @@ Route::group(['middleware' => ['auth']], function()
     Route::post('files/move', 'FilesController@move');
     Route::post('files/delete', 'FilesController@delete');
     Route::get('files/folder/{id}', 'FilesController@folder');
+    Route::get('files/download/{id}', 'FilesController@download');
 });

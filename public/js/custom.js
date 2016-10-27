@@ -34,11 +34,9 @@ $(function(){
         if($('.album-img-list input:checked').length){
             $('.btn-move-album').show();
             $('.btn-delete-pic').show();
-            $('.btn-download-pic').show();
         }else{
             $('.btn-move-album').hide();
             $('.btn-delete-pic').hide();
-            $('.btn-download-pic').hide();
         }
         updatePicSelectData();
     });

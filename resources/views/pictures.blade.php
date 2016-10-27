@@ -9,7 +9,6 @@
                         <div class="col-sm-4"><i class="fa fa-home"></i>图片管理</div>
                         <div class="col-sm-8 align-right">
                             <button type="button" class="btn-delete-pic admin-btn btn btn-danger"><i class="fa fa-trash"></i>删除</button>
-                            <button type="button" class="btn-download-pic admin-btn btn btn-primary"><i class="fa fa-download"></i>下载</button>
                             <button type="button" class="btn-move-album admin-btn btn btn-primary" data-toggle="modal" data-target="#move_item"><i class="fa fa-hand-rock-o"></i>移动到相册</button>
                             <button type="button" class="admin-btn btn btn-primary" data-toggle="modal" data-target="#add_album"><i class="fa fa-plus-circle"></i>添加相册</button>
                             <button type="button" class="admin-btn btn btn-primary" data-toggle="modal" data-target="#add_item"><i class="fa fa-plus-circle"></i>上传图片</button>
@@ -27,14 +26,14 @@
                                         <form action="{{ URL('albums/'.$album->id) }}" method="POST" style="display:inline;">
                                             <input name="_method" type="hidden" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <button type="button" class="btn-delete-album del-data btn btn-danger"><i class="fa fa-trash"></i>删除</button>
+                                            <button type="button" class="btn-delete-album del-data btn btn-danger"><i class="fa fa-trash"></i>删除相册</button>
                                         </form>
                                         <input type="checkbox" class="all-check" id="all_checked_{{ $album->id }}"><label for="all_checked_{{ $album->id }}">全选</label>
                                     </div>
                                 </h3>
                                 <div class="album-img-list">
                                     @foreach($album->getPictureList() as $pic)
-                                        <a href="javascript:void(0);" data-link="{{ asset($pic->src) }}">
+                                        <a href="javascript:void(0);" data-id="{{ $pic->id }}" data-link="{{ asset($pic->src) }}">
                                             <img src="{{ asset($pic->src) }}">
                                             <input style="display:none;" type="checkbox" name="pic[]" value="{{ $pic->id }}" form="move-albums" />
                                         </a>
@@ -55,7 +54,7 @@
                                 </h3>
                                 <div class="album-img-list">
                                     @foreach($pictures as $pic)
-                                        <a href="javascript:void(0);" data-link="{{ asset($pic->src) }}">
+                                        <a href="javascript:void(0);" data-id="{{ $pic->id }}" data-link="{{ asset($pic->src) }}">
                                             <img src="{{ asset($pic->src) }}">
                                             <input style="display:none;" type="checkbox" name="pic[]" value="{{ $pic->id }}" form="move-albums" />
                                         </a>
@@ -169,11 +168,30 @@
             </div>
         </div>
     </div>
-    <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}" />
     <script src="{{ asset('js/dmuploader-preview.js') }}"></script>
     <script src="{{ asset('js/dmuploader.js') }}"></script>
-    <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
+    <script src="{{ asset('js/BootstrapMenu.min.js') }}"></script>
     <script>
+        var menu = new BootstrapMenu('.album-img-list a', {
+            fetchElementData: function($rowElem) {
+                return $rowElem;
+            },
+            actions: [{
+                name: '下载',
+                iconClass: 'fa-download',
+                onClick: function($row) {
+                    var id = $row.attr('data-id');
+                    location.href = "{{ asset('pictures/download') }}" + '/' + id;
+                }
+            },{
+                name: '新窗口预览',
+                iconClass: 'fa-expand',
+                onClick: function($row) {
+                    var src = $row.attr('data-link');
+                    window.open(src);
+                }
+            }]
+        });
         $(function(){
             $('#drag-and-drop-zone').dmUploader({
                 url: '{{ URL("pictures/upload")}}',
