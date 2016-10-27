@@ -168,6 +168,7 @@ return [
          */
         App\Providers\PaymentServiceProvider::class,
         HieuLe\Active\ActiveServiceProvider::class,
+        Dingo\Api\Provider\LaravelServiceProvider::class,
 
         //
 

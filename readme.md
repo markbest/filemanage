@@ -3,11 +3,13 @@
 
 # 系统组件
 - [hieu-le/active](https://github.com/letrunghieu/active)
+- [dingo/api](https://github.com/dingo/api)
 
 # 系统特色
 - 简单的图片管理、相册管理
 - 简单的文件管理、文件夹管理
 - 图片和文件的批量上传
+- 可以使用API接口远程管理文件
 
 # 安装使用
 - 从[github](https://github.com/markbest/laravel_manage)上下载源代码

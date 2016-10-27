@@ -11,6 +11,13 @@
 */
 
 Auth::routes();
+
+/* api route */
+$api = app('Dingo\Api\Routing\Router');
+$api->version('v1', function ($api) {
+    $api->post('getAlbumsList','App\Http\Controllers\Api\V1\AlbumsController@listAll');
+});
+
 Route::group(['middleware' => ['auth']], function()
 {
     Route::get('/', 'PicturesController@index');
