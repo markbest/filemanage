@@ -25,7 +25,7 @@ input[class=all-check]{margin-right:5px;}
 /* login css */
 #app-layout{background-color:#323B55;}
 .login-container{margin:300px auto 0px auto;width:300px;}
-.login-container .login-title{text-align:center;font-size:24px;font-weight:bold;color:#ffffff;}
+.login-container .login-title{text-align:center;font-size:24px;color:#ffffff;}
 .login-container .form-group{margin-bottom:5px;}
 .login-container .panel-body{padding:15px 15px 5px 15px;}
 .login-container .panel{background-color:transparent;border:0px;box-shadow:0 0 0 rgba(0,0,0,.05)}
@@ -35,7 +35,6 @@ input[class=all-check]{margin-right:5px;}
     margin-top: 7px;
     color: #fff;
     font-size: 18px;
-    font-weight: bold;
     text-shadow: 0px -1px 0px #5b6ddc;
     outline: none;
     border: 1px solid rgba(0, 0, 0, .49);
