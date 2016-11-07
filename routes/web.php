@@ -40,7 +40,7 @@ $api->version('v1', function ($api) {
     $api->group(['namespace' => 'App\Http\Controllers\Api\V1'], function ($api){
 
         /* 登录api获取token */
-        $api->get('authenticate', 'AuthenticateController@authenticate');
+        $api->post('authenticate', 'AuthenticateController@authenticate');
 
         /* 通过token获取客户信息 */
         $api->get('getUser', 'AuthenticateController@authenticatedUser');
