@@ -169,6 +169,7 @@ return [
         App\Providers\PaymentServiceProvider::class,
         HieuLe\Active\ActiveServiceProvider::class,
         Dingo\Api\Provider\LaravelServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
         //
 
@@ -230,6 +231,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Payment' => App\Facades\PaymentGateway\PayFacade::class,
         'Active' => HieuLe\Active\Facades\Active::class,
+        'JWTAuth'=> Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory'=> Tymon\JWTAuth\Facades\JWTFactory::class,
 
     ],
 
