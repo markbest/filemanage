@@ -40,29 +40,29 @@ $api->version('v1', function ($api) {
     $api->group(['namespace' => 'App\Http\Controllers\Api\V1'], function ($api){
 
         /* 登录api获取token */
-        $api->post('authenticate', 'AuthenticateController@authenticate');
+        $api->get('authenticate', 'AuthenticateController@authenticate');
 
         /* 通过token获取客户信息 */
-        $api->post('getUser', 'AuthenticateController@authenticatedUser');
+        $api->get('getUser', 'AuthenticateController@authenticatedUser');
 
         /* 销毁token，如果需要继续使用API则需要重新登录 */
-        $api->post('logout', 'AuthenticateController@logout');
+        $api->get('logout', 'AuthenticateController@logout');
 
         /* 重新生成token */
         $api->get('token', 'AuthenticateController@getToken');
     });
 
     $api->group(['namespace' => 'App\Http\Controllers\Api\V1', 'middleware' => ['jwt.auth']], function ($api){
-        $api->post('albumsList','AlbumsController@listAll');
-        $api->post('albumInfo/{id}','AlbumsController@info');
+        $api->get('albumsList','AlbumsController@listAll');
+        $api->get('albumInfo/{id}','AlbumsController@info');
 
-        $api->post('picturesList', 'PicturesController@listAll');
-        $api->post('pictureInfo/{id}', 'PicturesController@info');
+        $api->get('picturesList', 'PicturesController@listAll');
+        $api->get('pictureInfo/{id}', 'PicturesController@info');
 
-        $api->post('foldersList', 'FoldersController@listAll');
-        $api->post('folderInfo/{id}', 'FoldersController@info');
+        $api->get('foldersList', 'FoldersController@listAll');
+        $api->get('folderInfo/{id}', 'FoldersController@info');
 
-        $api->post('filesList', 'FilesController@listAll');
-        $api->post('fileInfo/{id}', 'FilesController@info');
+        $api->get('filesList', 'FilesController@listAll');
+        $api->get('fileInfo/{id}', 'FilesController@info');
     });
 });

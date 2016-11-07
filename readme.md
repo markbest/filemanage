@@ -21,8 +21,8 @@
 # Demo
 - http://manage.mark-here.com/  admin@admin.com  123456
 
-# API调用
-- 获取$token  :  authenticate
+# API调用(返回Json数据)
+- 获取$token  :  api/authenticate?email=***&password=***
 - 获取相册列表 : api/albumsList?token=$token
 - 获取相册详情 : api/albumInfo/id?token=$token
 - 获取图片列表 : api/picturesList?token=$token
