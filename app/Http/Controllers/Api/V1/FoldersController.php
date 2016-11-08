@@ -7,12 +7,12 @@ use App\Http\Controllers\Controller;
 
 class FoldersController extends Controller{
 
-    public function listAll(){
+    public function index(){
         $folders = Folder::all();
         return $this->response->array($folders);
     }
 
-    public function info($id){
+    public function show($id){
         $folder = Folder::find($id);
         return $this->response->array($folder);
     }

@@ -53,16 +53,9 @@ $api->version('v1', function ($api) {
     });
 
     $api->group(['namespace' => 'App\Http\Controllers\Api\V1', 'middleware' => ['jwt.auth']], function ($api){
-        $api->get('albumsList','AlbumsController@listAll');
-        $api->get('albumInfo/{id}','AlbumsController@info');
-
-        $api->get('picturesList', 'PicturesController@listAll');
-        $api->get('pictureInfo/{id}', 'PicturesController@info');
-
-        $api->get('foldersList', 'FoldersController@listAll');
-        $api->get('folderInfo/{id}', 'FoldersController@info');
-
-        $api->get('filesList', 'FilesController@listAll');
-        $api->get('fileInfo/{id}', 'FilesController@info');
+        $api->resource('album', 'AlbumsController');
+        $api->resource('picture', 'PicturesController');
+        $api->resource('folder', 'FoldersController');
+        $api->resource('file', 'FilesController');
     });
 });

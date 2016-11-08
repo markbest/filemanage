@@ -7,12 +7,12 @@ use App\Http\Controllers\Controller;
 
 class PicturesController extends Controller{
 
-    public function listAll(){
+    public function index(){
         $pictures = Picture::all();
         return $this->response->array($pictures);
     }
 
-    public function info($id){
+    public function show($id){
         $picture = Picture::find($id);
         return $this->response->array($picture);
     }
