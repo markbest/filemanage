@@ -21,13 +21,5 @@
 # Demo
 - http://manage.mark-here.com/  admin@admin.com  123456
 
-# API调用(返回Json数据)
-- 获取$token  :  api/authenticate?email=xxx&password=xxx
-- 获取相册列表 : api/albumsList?token=$token
-- 获取相册详情 : api/albumInfo/id?token=$token
-- 获取图片列表 : api/picturesList?token=$token
-- 获取图片详情 : api/pictureInfo/id?token=$token
-- 获取文件夹列表 : api/foldersList?token=$token
-- 获取文件夹详情 : api/folderInfo/id?token=$token
-- 获取文件列表 : api/filesList?token=$token
-- 获取文件详情 : api/fileInfo/id?token=$token
+# API调用
+- https://github.com/markbest/sdk
