@@ -54,8 +54,12 @@ $api->version('v1', function ($api) {
 
     $api->group(['namespace' => 'App\Http\Controllers\Api\V1', 'middleware' => ['jwt.auth']], function ($api){
         $api->resource('album', 'AlbumsController');
+
         $api->resource('picture', 'PicturesController');
+        $api->post('picture/move', 'PicturesController@move');
+
         $api->resource('folder', 'FoldersController');
+
         $api->resource('file', 'FilesController');
     });
 });
