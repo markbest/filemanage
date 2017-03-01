@@ -19,7 +19,7 @@
 - 安装数据库：php artisan migrate
 
 # Demo
-- http://manage.mark-here.com/  admin@admin.com  123456
+- http://filebox.markbest.site/  admin@admin.com  123456
 
 # API调用
 - https://github.com/markbest/sdk
