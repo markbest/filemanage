@@ -1,4 +1,4 @@
-# laravel_manage
+# filemanage
 基于laravel 5.3开发的轻量级的文件管理系统（还在完善当中）
 
 # 系统组件
